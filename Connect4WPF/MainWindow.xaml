@@ -1,0 +1,57 @@
+﻿<Window x:Class="Connect4WPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Connect4WPF"
+        xmlns:vm="clr-namespace:Connect4WPF.ViewModels"
+        mc:Ignorable="d"
+        x:Name="Window"
+        Title="Connect4" Height="450" Width="500">
+    <Window.DataContext>
+        <vm:ConnectFourVM />
+    </Window.DataContext>
+    <Window.Resources>
+        <local:CellToColorConverter x:Key="CellToColorConverter" />
+        <local:BoardTo1dArray x:Key="BoardTo1dArray" />
+        <local:IntToString x:Key="IntToString" />
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <TextBlock Text="Current Player:" Margin="10" />
+            <TextBlock Text="{Binding CurrentPlayer}" Margin="10" FontWeight="Bold" />
+        </StackPanel>
+        <StackPanel Grid.Row="1" HorizontalAlignment="Center" Orientation="Horizontal">
+            <TextBlock Text="Depth" Margin="10" FontWeight="Bold" />
+            <TextBlock Text="{Binding Path=Depth, Converter={StaticResource IntToString}}" Margin="10"
+                       FontWeight="Bold" />
+            <Slider Minimum="1" Maximum="6" Orientation="Horizontal" Value="{Binding Path=Depth}" Margin="10"
+                    Width="300" />
+        </StackPanel>
+        <ItemsControl Grid.Row="2"
+                      ItemsSource="{Binding Board, Converter={StaticResource BoardTo1dArray}, Mode=OneWay}"
+                      Margin="10">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="7" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Button Command="{Binding DataContext.MakeMoveCommand, IsAsync=True, ElementName=Window}"
+                            CommandParameter="{Binding Column}">
+                        <Ellipse x:Name="Ellipse" Width="40" Height="40" Margin="5"
+                                 Fill="{Binding State, Converter={StaticResource CellToColorConverter}}">
+                        </Ellipse>
+                    </Button>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Grid>
+
+</Window>
