@@ -34,6 +34,16 @@ namespace Connect4WPF.ViewModels
                 OnPropertyChanged();
             } 
         }
+        
+        public bool UseStandardMiniMax
+        {
+            get => _cpuPlayer.UseStandardMiniMax;
+            set
+            {
+                _cpuPlayer.UseStandardMiniMax = value;
+                OnPropertyChanged();
+            } 
+        }
 
         public CellState CurrentPlayer => _model.CurrentPlayer;
 

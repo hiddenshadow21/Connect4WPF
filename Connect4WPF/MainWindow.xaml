@@ -19,21 +19,23 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-            <TextBlock Text="Current Player:" Margin="10" />
-            <TextBlock Text="{Binding CurrentPlayer}" Margin="10" FontWeight="Bold" />
+        <StackPanel HorizontalAlignment="Center">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBlock Text="Current Player:" Margin="10" />
+                <TextBlock Text="{Binding CurrentPlayer}" Margin="10" FontWeight="Bold" />
+            </StackPanel>
+            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                <TextBlock Text="Depth" Margin="10" FontWeight="Bold" />
+                <TextBlock Text="{Binding Path=Depth, Converter={StaticResource IntToString}}" Margin="10"
+                           FontWeight="Bold" />
+                <Slider Minimum="1" Maximum="6" Orientation="Horizontal" Value="{Binding Path=Depth}" Margin="10"
+                        Width="300" />
+            </StackPanel>
+            <CheckBox IsChecked="{Binding UseStandardMiniMax}">Use standard minimax algorithm</CheckBox>
         </StackPanel>
-        <StackPanel Grid.Row="1" HorizontalAlignment="Center" Orientation="Horizontal">
-            <TextBlock Text="Depth" Margin="10" FontWeight="Bold" />
-            <TextBlock Text="{Binding Path=Depth, Converter={StaticResource IntToString}}" Margin="10"
-                       FontWeight="Bold" />
-            <Slider Minimum="1" Maximum="6" Orientation="Horizontal" Value="{Binding Path=Depth}" Margin="10"
-                    Width="300" />
-        </StackPanel>
-        <ItemsControl Grid.Row="2"
+        <ItemsControl Grid.Row="1"
                       ItemsSource="{Binding Board, Converter={StaticResource BoardTo1dArray}, Mode=OneWay}"
                       Margin="10">
             <ItemsControl.ItemsPanel>
