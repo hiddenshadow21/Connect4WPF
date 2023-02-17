@@ -1,6 +1,6 @@
 ﻿namespace Connect4;
 
-public static class Extentions
+public static class Extensions
 {
     public static int MakeMove(this Cell[,] board, int column, CellState currentPlayer)
     {
